@@ -7,13 +7,13 @@ import { setLanguage } from "../slices/languageSlice"
 
 const LanguageBtn = () => {
     const navigate = useNavigate();
-    const LanguageList = [{ id:1,lang:"English"}, 
-    {id:2,lang:"English"},
-    {id:3,lang:"English"},
-    {id:4,lang:"English"},
-    {id:5,lang:"English"},
-    {id:6,lang:"English"},
-    {id:7,lang:"English"},
+    const LanguageList = [{ id:1,lang:"english"}, 
+    {id:2,lang:"kannada"},
+    {id:3,lang:"marathi"},
+    {id:4,lang:"tamil"},
+    {id:5,lang:"telugu"},
+    {id:6,lang:"gujarati"},
+    {id:7,lang:"bengali"},
     {id:8,lang:"punjabi"},
     {id:9,lang:"hindi"}]
 
@@ -27,7 +27,7 @@ const LanguageBtn = () => {
 //then use it in upload wala componenet
     const clickHandler = () => {
         console.log("inside click handler");
-        navigate("/upload");
+        navigate("/layout");
         
     }
     // console.log("selectedLang - ",selectedLang);  
