@@ -148,6 +148,7 @@ import "video-react/dist/video-react.css";
 import { useSelector } from "react-redux";
 import { useDropzone } from "react-dropzone";
 import { BiArrowFromBottom } from "react-icons/bi";
+import { toast } from 'react-toastify';
 
 export default function Upload({selectedVideo, setSelectedVideo}) {
   const { language } = useSelector((state) => state.language);
@@ -159,9 +160,25 @@ export default function Upload({selectedVideo, setSelectedVideo}) {
     },
   });
 
-  const handleUpload = () => {
-    // Handle the upload logic here (e.g., send the file to the server)
-    console.log("Uploading video:", selectedVideo);
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+
+    // Check if a file is selected
+    if (selectedFile) {
+      // Check the file size (in bytes)
+      const fileSize = selectedFile.size;
+      const maxSize = 10 * 1024 * 1024; // 10 MB (adjust as needed)
+
+      if (fileSize > maxSize) {
+        toast.error('File size exceeds the limit (10 MB)');
+        setSelectedVideo(null);
+      } else if (!selectedFile.name.endsWith('.mp4')) {
+        toast.error('Please select an MP4 video file');
+        setSelectedVideo(null);
+      } else {
+        setSelectedVideo(selectedFile);
+      }
+    }
   };
 
   return (
@@ -170,23 +187,23 @@ export default function Upload({selectedVideo, setSelectedVideo}) {
         {/* Div for the upload functionality */}
         <div
           className=" p-4 w-[355px] h-[355px] aspect-video flex flex-col justify-center items-center border-[1px] border-solid border-[rgba(0,0,0,1)] rounded-2xl cursor-pointer "
-          onClick={() => inputRef.current.click()}
+          onClick={() => inputRef.current.click()}  
         >
           <div
             className="h-[300px] w-[300px]  flex flex-col justify-center items-center border-[2px] border-dotted border-[rgba(45,46,47,1)] rounded-2xl  cursor-pointer"
             {...getRootProps()}
           >
-            <input {...getInputProps()} />
+            <input {...getInputProps()} onChange={handleFileChange} />
             
             {selectedVideo ? (
-              <aside className=" top-10 left-5 w-[300px]  ">
-                <video className="aspect-video rounded-md" src={URL.createObjectURL(selectedVideo)} controls></video>
+              <aside className=" top-10 left-5 w-[300px]  p-3">
+                <video className="aspect-video rounded-md" type="video/mp4" src={URL.createObjectURL(selectedVideo)} controls></video>
               </aside>
             )
             :
             <>
               <BiArrowFromBottom className="text-slate-400 w-[90%] h-[90%] rounded-sm" />
-              <p className=" text-white bold ">Browse files to upload</p>
+              <p className=" text-white bold ">Browse video files to upload</p>
 
             </>}
 
