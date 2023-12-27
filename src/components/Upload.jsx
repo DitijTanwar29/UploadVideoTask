@@ -177,10 +177,11 @@ export default function Upload({selectedVideo, setSelectedVideo}) {
         setSelectedVideo(null);
       } else {
         setSelectedVideo(selectedFile);
+        toast.success("Video uploaded successfully");
       }
     }
   };
-
+  console.log(selectedVideo)
   return (
       <div className="flex justify-between h-[60vh]">
 
